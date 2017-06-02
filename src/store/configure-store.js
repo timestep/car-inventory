@@ -2,8 +2,12 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { browserHistory } from 'react-router';
 import { routerMiddleware } from 'react-router-redux';
 import rootReducer from '../reducers';
+import { routeChangeWatcher as rootSaga } from '../app/sagas';
+import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
 
 const isDevEnv = process.env.NODE_ENV === 'development';
+const sagaMiddleware = createSagaMiddleware();
 
 function configureStore(initialState) {
   const store = compose(
@@ -18,10 +22,11 @@ function configureStore(initialState) {
 function _getMiddleware() {
   let middleware = [
     routerMiddleware(browserHistory),
+    sagaMiddleware,
   ];
 
   if (isDevEnv) {
-    middleware = [...middleware];
+    middleware = [...middleware, logger];
   }
 
   return applyMiddleware(...middleware);
@@ -46,5 +51,6 @@ function _enableHotLoader(store) {
   }
 }
 
+export const store = configureStore({});
 
-export default configureStore;
+sagaMiddleware.run(rootSaga);

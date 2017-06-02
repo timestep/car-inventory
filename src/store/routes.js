@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import App from '../app/app.js';
+import AppContainer from '../app';
 export default (
-  <Route path="/" component={ App }/>
+  <Route path="/" component={ AppContainer }/>
 );
