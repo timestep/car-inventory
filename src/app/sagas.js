@@ -10,7 +10,6 @@ export function* routeChangeWatcher() {
 }
 
 function* isRootRoute(event) {
+  if (event.payload.pathname !== '/') return;
   const carList = yield call(getCarList);
-  console.log('hi', event, carList);
-  debugger;
 }

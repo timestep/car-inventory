@@ -1,13 +1,12 @@
 import isoFetch from 'isomorphic-fetch';
 
-export const getCarList = () =>{
-  console.log(isoFetch);
-  return isoFetch('https://s3.amazonaws.com/elasticbeanstalk-us-east-1-253941727413/interview/car.json')
-    .then(response => {
-      if (response.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return response.json();
-    })
-    .then(response => response.json());
+const apiCall = isoFetch('http://localhost:1337/');
+
+export const getCarList = () => {
+  return apiCall.then(response => {
+    if (response.status >= 400) {
+      throw new Error('Bad response from server');
+    }
+    return response.json();
+  });
 };
